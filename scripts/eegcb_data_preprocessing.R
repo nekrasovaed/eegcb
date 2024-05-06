@@ -87,14 +87,65 @@ CB = CB |> mutate(
                       Valence == 0 ~ "neutral"))
 
 ## создаем колонку со значением CB_EXP2 - создается по EXP_general
-##Valence 0 = нейтральное, 1 = негативное, 2 = позитивное.
+##Valence 0 = нейтральное, 1 = негативное, 2 = позитивное. <3 = позитивное, > 3 = негативное
 
-#CB = CB |> mutate(
-#  CB_EXP2 = case_when(Valence == 1 & EXP_general < 0 ~ "match_negative",
-#                      Valence == 1 & EXP_general > 0 ~ "mismatch_positive",
-#                      Valence == 2 & EXP_general > 0 ~ "match_positive",
-#                      Valence == 2 & EXP_general < 0 ~ "mismatch_negative",
-#                      Valence == 0 ~ "neutral"))
+
+CB = CB |> mutate(
+  CB_EXP_covid2 = case_when(Valence == 1 & EXP_covid < 3.5 ~ "mismatch",
+                      Valence == 1 & EXP_covid > 3.5 ~ "match",
+                      Valence == 2 & EXP_covid > 3.5 ~ "mismatch",
+                      Valence == 2 & EXP_covid < 3.5 ~ "match",
+                      Valence == 0 ~ "neutral"))
+
+CB$CB_EXP_covid2
+
+CB = CB |> mutate(
+  CB_EXP_covid4 = case_when(Valence == 1 & EXP_covid < 3.5 ~ "mismatch_negative",
+                      Valence == 1 & EXP_covid > 3.5 ~ "match_negative",
+                      Valence == 2 & EXP_covid > 3.5 ~ "mismatch_positive",
+                      Valence == 2 & EXP_covid < 3.5 ~ "match_positive",
+                      Valence == 0 ~ "neutral"))
+
+
+CB = CB |> mutate(
+  CB_EXP_general2 = case_when(Valence == 1 & EXP_general < 3.5 ~ "mismatch",
+                            Valence == 1 & EXP_general > 3.5 ~ "match",
+                            Valence == 2 & EXP_general > 3.5 ~ "mismatch",
+                            Valence == 2 & EXP_general < 3.5 ~ "match",
+                            Valence == 0 ~ "neutral"))
+
+CB$CB_EXP_covid2
+
+CB = CB |> mutate(
+  CB_EXP_general4 = case_when(Valence == 1 & EXP_general < 3.5 ~ "mismatch_negative",
+                            Valence == 1 & EXP_general > 3.5 ~ "match_negative",
+                            Valence == 2 & EXP_general > 3.5 ~ "mismatch_positive",
+                            Valence == 2 & EXP_general < 3.5 ~ "match_positive",
+                            Valence == 0 ~ "neutral"))
+
+
+CB = CB |> mutate(
+  CB_EXP_consp2 = case_when(Valence == 1 & EXP_consp < 3 ~ "mismatch",
+                              Valence == 1 & EXP_consp > 3 ~ "match",
+                              Valence == 2 & EXP_consp > 3 ~ "mismatch",
+                              Valence == 2 & EXP_consp < 3 ~ "match",
+                              Valence == 0 ~ "neutral"))
+
+CB$CB_EXP_covid2
+
+CB = CB |> mutate(
+  CB_EXP_consp4 = case_when(Valence == 1 & EXP_consp < 3 ~ "mismatch_negative",
+                              Valence == 1 & EXP_consp > 3 ~ "match_negative",
+                              Valence == 2 & EXP_consp > 3 ~ "mismatch_positive",
+                              Valence == 2 & EXP_consp < 3 ~ "match_positive",
+                              Valence == 0 ~ "neutral"))
+
+CB$CB_EXP_consp2
+cor(CB$IAT, CB$EXP_covid)
+
+CB = CB |> filter(Valence != "0")
+
+CB$CB_EXP_consp2
 
 ## создаем колонку со значением CB_EXP4 - создается по EXP_general
 ##Valence 0 = нейтральное, 1 = негативное, 2 = позитивное.
@@ -107,5 +158,5 @@ CB = CB |> mutate(
 #                      Valence == 0 ~ "neutral"))
 
 ### DATA SAVING
-write_xlsx(CB, "C:/Users/cybergnom/Documents/eegcb/data/CB.xls")
+write_xlsx(CB, "C:/Users/cybergnom/Documents/eegcb/data/CB2.xlsx")
 
