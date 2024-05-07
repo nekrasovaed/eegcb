@@ -1,5 +1,3 @@
-########### Main model ################
-
 ### PREPEARING WORKING SPACE
 install.packages("ggplot2")
 install.packages("writexl")
@@ -21,50 +19,89 @@ CB <- EEGCB_ALL
 colnames(CB)
 
 ### Attitude factor combines dependent from the issue of the topic
-CB = CB |> filter(ID != 'EEGCB12012') ## убираем 12, т.к. для него еще не посчитан IAT
 
 ## создаем колонку со значениями IAT
 CB = CB |> mutate(
   IAT = case_when(
+    ID == "EEGCB12018" ~ -0.1005694483,
+    ID == "EEGCB12017" ~ 0.2182121651,
+    ID == "EEGCB11016" ~ -0.1905619843,
+    ID == "EEGCB12015" ~ 0.06957209508,
+    ID == "EEGCB11014" ~ 0.7457023126,
+    ID == "EEGCB11013" ~ -0.05498800629,
+    ID == "EEGCB12012" ~ 0.2949198283,
     ID == "EEGCB12011" ~ 0.634710609,
     ID == "EEGCB11010" ~ 0.2257430605,
     ID == "EEGCB12009" ~ -0.2742406897,
     ID == "EEGCB11008" ~ 0.1206581881,
     ID == "EEGCB12007" ~ -0.6711003127,
-    ID == "EEGCB11006" ~ 0.2842380924))
+    ID == "EEGCB11006" ~ 0.2842380924,
+    ID == "EEGCB11005" ~ 0.2842380924,
+    ID == "EEGCB12003" ~ 0.5549722965,
+    ID == "EEGCB12002" ~ -0.0452171823))
 
 ## создаем колонку со значением EXP_general
 
 CB = CB |> mutate(
   EXP_general = case_when(
+    ID == "EEGCB12018" ~ 4.25,
+    ID == "EEGCB12017" ~ 1.75,
+    ID == "EEGCB11016" ~ 2.25,
+    ID == "EEGCB12015" ~ 1.333333333,
+    ID == "EEGCB11014" ~ 1.583333333,
+    ID == "EEGCB11013" ~ 2.75,
+    ID == "EEGCB12012" ~ 1.416666667,
     ID == "EEGCB12011" ~ 2.166666667,
     ID == "EEGCB11010" ~ 2.75,
     ID == "EEGCB12009" ~ 1.916666667,
     ID == "EEGCB11008" ~ 2,
     ID == "EEGCB12007" ~ 4.083333333,
-    ID == "EEGCB11006" ~ 2.916666667))
+    ID == "EEGCB11006" ~ 2.916666667,
+    ID == "EEGCB11005" ~ 0.2842380924,
+    ID == "EEGCB12003" ~ 2.333333333,
+    ID == "EEGCB12002" ~ 1.833333333))
 
 ## создаем колонку со значением EXP_consp
 
 CB = CB |> mutate(
   EXP_consp = case_when(
+    ID == "EEGCB12018" ~ 4.571428571,
+    ID == "EEGCB12017" ~ 1.285714286,
+    ID == "EEGCB11016" ~ 1.714285714,
+    ID == "EEGCB12015" ~ 1,
+    ID == "EEGCB11014" ~ 1.285714286,
+    ID == "EEGCB11013" ~ 1.714285714,
+    ID == "EEGCB12012" ~ 1.142857143,
     ID == "EEGCB12011" ~ 1.142857143,
     ID == "EEGCB11010" ~ 1.857142857,
     ID == "EEGCB12009" ~ 1,
     ID == "EEGCB11008" ~ 2.571428571,
     ID == "EEGCB12007" ~ 2.714285714,
-    ID == "EEGCB11006" ~ 1))
+    ID == "EEGCB11006" ~ 1,
+    ID == "EEGCB11005" ~ 0.2842380924,
+    ID == "EEGCB12003" ~ 1.285714286,
+    ID == "EEGCB12002" ~ 1.285714286))
 
 ## создаем колонку со значением EXP_covid
 
 CB = CB |> mutate(
   EXP_covid = case_when(
+    ID == "EEGCB12018" ~ 5.294117647,
+    ID == "EEGCB12017" ~ 1.941176471,
+    ID == "EEGCB11016" ~ 2.441176471,
+    ID == "EEGCB12015" ~ 2.205882353,
+    ID == "EEGCB11014" ~ 2.176470588,
+    ID == "EEGCB11013" ~ 2.147058824,
+    ID == "EEGCB12012" ~ 1.176470588,
     ID == "EEGCB12011" ~ 2.205882353,
     ID == "EEGCB11010" ~ 3.529411765,
     ID == "EEGCB12009" ~ 1.5,
     ID == "EEGCB11008" ~ 2.764705882,
     ID == "EEGCB12007" ~ 4.764705882,
-    ID == "EEGCB11006" ~ 2.647058824))
+    ID == "EEGCB11006" ~ 2.647058824,
+    ID == "EEGCB11005" ~ 4.352941176,
+    ID == "EEGCB12003" ~ 2.235294118,
+    ID == "EEGCB12002" ~ 2.470588235))
 
 ## создаем колонку со значением CB_IAT2
 ##Valence 0 = нейтральное, 1 = негативное, 2 = позитивное.
@@ -158,5 +195,5 @@ CB$CB_EXP_consp2
 #                      Valence == 0 ~ "neutral"))
 
 ### DATA SAVING
-write_xlsx(CB, "C:/Users/cybergnom/Documents/eegcb/data/CB2.xlsx")
+write_xlsx(CB, "C:/Users/cybergnom/Documents/eegcb/data/CB.xlsx")
 

@@ -30,6 +30,7 @@ library(GGally)
 library(corrplot)
 library(scatterPlotMatrix)
 
+
 #visualize correlation matrix
 cor(CB[7:10])
 scatterplotMatrix(CB[7:10], diagonal = "histogram", smooth = FALSE)
@@ -51,6 +52,9 @@ corrplot(cor(CB[7:10]))
 ########################################################
 #################### CREDIBILITY #######################
 ########################################################
+colnames(CB)
+
+CB = CB |> filter(Valence != "0")
 
 ## Random factors testing
 model = lmer(Performance_Rate1 ~ 1 + (1 | ID) + (1 | Row_num), data = CB) 
@@ -66,13 +70,14 @@ check_normality(model2)
 
 colnames(CB)
 
-
+summary(CB$EXP_general)
 
 Model_A = lmer(Performance_Rate1 ~ 1 
                + as.factor(CB_IAT2)
                + as.factor(CB_EXP_general2)
-              # + as.factor(CB_EXP_consp2)
-              # + as.factor(CB_EXP_covid2)
+               + as.factor(CB_EXP_consp2)
+               + as.factor(CB_EXP_covid2)
+               + Veracity
                + (1 | Row_num), data = CB, REML = FALSE, control = lmerControl(calc.derivs = FALSE))
 
 summary(Model_A)
