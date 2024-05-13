@@ -180,20 +180,17 @@ CB = CB |> mutate(
 CB$CB_EXP_consp2
 cor(CB$IAT, CB$EXP_covid)
 
-CB = CB |> filter(Valence != "0")
 
-CB$CB_EXP_consp2
+############  Удаляем филлеры ####################
 
-## создаем колонку со значением CB_EXP4 - создается по EXP_general
-##Valence 0 = нейтральное, 1 = негативное, 2 = позитивное.
+CB2 = CB |> filter(Valence != "0")
 
-#CB = CB |> mutate(
-#  CB_EXP4 = case_when(Valence == 1 & EXP_general < 0 ~ "match_negative",
-#                      Valence == 1 & EXP_general > 0 ~ "mismatch_positive",
-#                      Valence == 2 & EXP_general > 0 ~ "match_positive",
-#                      Valence == 2 & EXP_general < 0 ~ "mismatch_negative",
-#                      Valence == 0 ~ "neutral"))
 
 ### DATA SAVING
 write_xlsx(CB, "C:/Users/cybergnom/Documents/eegcb/data/CB.xlsx")
+emmeans(Model_A)
 
+emm1 = emmeans(Model_A, specs = pairwise ~ CB_IAT2)
+emm2 = emmeans(Model_A, specs = pairwise ~ CB_EXP_general2)
+emm3 = emmeans(Model_A, specs = pairwise ~ CB_EXP_covid2)
+emm4 = emmeans(Model_A, specs = pairwise ~ CB_EXP_consp2)
